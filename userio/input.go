@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"fmt"
 	"os"
+	"strconv"
 	"syscall"
 
 	"golang.org/x/term"
@@ -49,4 +50,24 @@ func ReadInput(msg string) (string, error) {
 		return "", err
 	}
 	return scanner.Text(), nil
+}
+
+func GetParameterAsInt(args []string, index uint) (res int, ok bool) {
+	if len(args) == 0 {
+		return 0, false
+	}
+
+	if checkLength(args, index) {
+		return 0, false
+	}
+
+	res, err := strconv.Atoi(args[index])
+	if err != nil {
+		return 0, false
+	}
+	return res, true
+}
+
+func checkLength(args []string, index uint) bool {
+	return uint(len(args)-1) < index
 }

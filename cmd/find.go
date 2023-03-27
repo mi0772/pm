@@ -5,6 +5,8 @@ package cmd
 
 import (
 	"fmt"
+	"mi0772/pm/database"
+	"mi0772/pm/userio"
 
 	"github.com/spf13/cobra"
 )
@@ -15,8 +17,17 @@ var findCmd = &cobra.Command{
 	Short: "A brief description of your command",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("find called")
-		fmt.Printf("looking for record named: %s\n", args[0])
+		if len(args) == 0 {
+			fmt.Println("specify query term : eg: pm find google.com")
+		}
+		term := args[0]
+
+		err := database.AccessToDatabase()
+		if err != nil {
+			panic(err)
+		}
+		userio.DisplayResult(database.Search(term))
+
 	},
 }
 

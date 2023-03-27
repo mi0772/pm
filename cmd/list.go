@@ -4,6 +4,7 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"fmt"
 	"github.com/spf13/cobra"
 	"mi0772/pm/database"
 	"mi0772/pm/userio"
@@ -19,6 +20,7 @@ var listCmd = &cobra.Command{
 		if err != nil {
 			panic(err)
 		}
+		fmt.Println()
 		userio.DisplayResult(database.Search("*"))
 	},
 }
