@@ -25,5 +25,6 @@ type Entry struct {
 }
 
 type Entries struct {
+	version int64
 	Entries []Entry `json:"entries"`
 }

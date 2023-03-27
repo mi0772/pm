@@ -14,7 +14,7 @@ import (
 // findCmd represents the find command
 var findCmd = &cobra.Command{
 	Use:   "find",
-	Short: "A brief description of your command",
+	Short: "search for label record into database",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {

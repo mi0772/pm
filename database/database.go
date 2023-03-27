@@ -48,6 +48,7 @@ func AccessToDatabase() error {
 		}
 		MasterPassword = string(password)
 	}
+	fetchAllRecords()
 	return nil
 }
 
@@ -78,7 +79,7 @@ func fetchAllRecords() ([]models.Entry, int) {
 		//decrypt content with master password
 		byteValue, err = security.Decrypt(byteValue, MasterPassword)
 		if err != nil {
-			fmt.Println("cannot decrypt database, wrong master password ?")
+			fmt.Println("\ncannot decrypt database, wrong master password ?")
 			os.Exit(0)
 		}
 		json.Unmarshal(byteValue, &result)
@@ -120,12 +121,14 @@ func Memorize(label, account, password string) {
 	var founded bool = false
 
 	//cerco eventuale record esistente
+
 	for i, v := range db {
 		if v.Label == label {
 			db[i].ModifiedAt = time.Now()
 			db[i].Password = password
 			db[i].Account = account
 			founded = true
+			break
 		}
 	}
 

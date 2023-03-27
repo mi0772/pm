@@ -14,7 +14,7 @@ import (
 // addCmd represents the add command
 var addCmd = &cobra.Command{
 	Use:   "add",
-	Short: "A brief description of your command",
+	Short: "Add a new password into database",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		err := database.AccessToDatabase()

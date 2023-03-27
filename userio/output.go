@@ -11,6 +11,7 @@ import (
 func DisplayResult(result []models.Entry) {
 	fmt.Println()
 	tbl := table.NewWriter()
+	tbl.SetStyle(table.StyleLight)
 	tbl.SetOutputMirror(os.Stdout)
 
 	sort.Slice(result, func(i, j int) bool {

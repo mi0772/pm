@@ -1,6 +1,5 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
@@ -14,7 +13,7 @@ import (
 // resetpwdCmd represents the resetpwd command
 var resetpwdCmd = &cobra.Command{
 	Use:   "resetpwd",
-	Short: "A brief description of your command",
+	Short: "change master password",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 

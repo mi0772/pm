@@ -13,7 +13,7 @@ import (
 // listCmd represents the list command
 var listCmd = &cobra.Command{
 	Use:   "list",
-	Short: "A brief description of your command",
+	Short: "list all passwords",
 	Long:  `A longer description that spans multiple lines and likely contains examples`,
 	Run: func(cmd *cobra.Command, args []string) {
 		err := database.AccessToDatabase()
