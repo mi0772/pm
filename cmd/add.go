@@ -24,15 +24,15 @@ var addCmd = &cobra.Command{
 
 		var label, account, password string
 		fmt.Println()
-		if label, err = userio.ReadInput("label"); err != nil {
+		if label, err = userio.ReadInputNotBlank("label"); err != nil {
 			fmt.Println(err)
 		}
 
-		if account, err = userio.ReadInput("user id"); err != nil {
+		if account, err = userio.ReadInputNotBlank("user id"); err != nil {
 			fmt.Println(err)
 		}
 
-		if password, err = userio.ReadInput("password"); err != nil {
+		if password, err = userio.ReadInputNotBlank("password"); err != nil {
 			fmt.Println(err)
 		}
 		var sc = &models.StoreCommand{Label: &label, Account: &account, Password: &password}

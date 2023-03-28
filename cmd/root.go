@@ -13,11 +13,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "pm",
 	Short: "Simpe console password manager",
-	Long: `Simpe console password manager:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Long:  ``,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },

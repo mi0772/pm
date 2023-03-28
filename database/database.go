@@ -4,12 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-
 	"log"
 	"mi0772/pm/models"
 	"mi0772/pm/security"
 	"mi0772/pm/userio"
 	"os"
+	"sort"
 	"strings"
 	"time"
 )
@@ -85,7 +85,6 @@ func fetchAllRecords() ([]models.Entry, int) {
 		json.Unmarshal(byteValue, &result)
 	}
 	size := len(result.Entries)
-
 	return filter(result.Entries, func(entry models.Entry) bool {
 		return !entry.Deleted
 	}), size
@@ -114,29 +113,36 @@ func ChangeMasterPassword(newPassword string) {
 	_ = os.WriteFile(userHomeDir+"/"+DB_NAME, file, 0644)
 }
 
-func Memorize(label, account, password string) {
-
-	dbArray, totalRecord := fetchAllRecords()
+func Update(id int, label, account, password string) {
+	dbArray, _ := fetchAllRecords()
 	db := dbArray[:]
-	var founded bool = false
-
-	//cerco eventuale record esistente
 
 	for i, v := range db {
-		if v.Label == label {
+		if v.Id == id {
 			db[i].ModifiedAt = time.Now()
 			db[i].Password = password
 			db[i].Account = account
-			founded = true
-			break
+			db[i].Label = label
+			cryptAndSave(db)
+			return
 		}
 	}
+}
 
-	if !founded {
-		entry := models.Entry{Id: totalRecord + 1, Label: label, Account: account, Password: password}
-		entry.CreatedAt = time.Now()
-		db = append(db, entry)
-	}
+func Memorize(label, account, password string) {
+	dbArray, _ := fetchAllRecords()
+
+	sort.Slice(dbArray, func(i, j int) bool {
+		return dbArray[i].Id < dbArray[j].Id
+	})
+
+	max := dbArray[len(dbArray)-1].Id
+
+	db := dbArray[:]
+
+	entry := models.Entry{Id: max + 1, Label: label, Account: account, Password: password}
+	entry.CreatedAt = time.Now()
+	db = append(db, entry)
 
 	cryptAndSave(db)
 }
@@ -152,6 +158,17 @@ func Search(label string) []models.Entry {
 	}
 
 	return result
+}
+
+func GetById(id int) (*models.Entry, bool) {
+	entries, _ := fetchAllRecords()
+	for _, v := range entries {
+		if v.Id == id {
+			return &v, true
+		}
+	}
+
+	return &models.Entry{}, false
 }
 
 func ExistDB() bool {
@@ -174,6 +191,7 @@ func Delete(id *int) {
 
 func cryptAndSave(db []models.Entry) {
 	var entries = models.Entries{Entries: db}
+	entries.Version = time.Now().UnixNano() / 1000000
 	file, _ := json.MarshalIndent(entries, "", " ")
 	var err error
 	file, err = security.Encrypt(file, MasterPassword[:])

@@ -52,6 +52,16 @@ func ReadInput(msg string) (string, error) {
 	return scanner.Text(), nil
 }
 
+func ReadInputNotBlank(msg string) (string, error) {
+	var result string
+
+	for len(result) == 0 {
+		fmt.Printf("%s:", msg)
+		fmt.Scanln(&result)
+	}
+	return result, nil
+}
+
 func GetParameterAsInt(args []string, index uint) (res int, ok bool) {
 	if len(args) == 0 {
 		return 0, false

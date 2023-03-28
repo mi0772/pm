@@ -2,6 +2,7 @@ package userio
 
 import (
 	"fmt"
+	"github.com/fatih/color"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"mi0772/pm/models"
 	"os"
@@ -22,9 +23,9 @@ func DisplayResult(result []models.Entry) {
 
 	for _, widget := range result {
 		if widget.ModifiedAt.IsZero() {
-			tbl.AppendRow([]interface{}{widget.Label, widget.Account, widget.Password, widget.Id, widget.CreatedAt.Format("2006-01-02 15:04:05"), "-"})
+			tbl.AppendRow([]interface{}{widget.Label, widget.Account, color.YellowString(widget.Password), widget.Id, widget.CreatedAt.Format("2006-01-02 15:04:05"), "-"})
 		} else {
-			tbl.AppendRow([]interface{}{widget.Label, widget.Account, widget.Password, widget.Id, widget.CreatedAt.Format("2006-01-02 15:04:05"), widget.ModifiedAt.Format("2006-01-02 15:04:05")})
+			tbl.AppendRow([]interface{}{widget.Label, widget.Account, color.YellowString(widget.Password), widget.Id, widget.CreatedAt.Format("2006-01-02 15:04:05"), widget.ModifiedAt.Format("2006-01-02 15:04:05")})
 
 		}
 		tbl.AppendSeparator()
