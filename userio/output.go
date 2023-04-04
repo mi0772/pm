@@ -19,15 +19,15 @@ func DisplayResult(result []models.Entry) {
 		return result[i].Label < result[j].Label
 	})
 
-	tbl.AppendHeader(table.Row{"Label", "Account", "Password", "Id", "Modified"})
+	tbl.AppendHeader(table.Row{"Label", "Account", "Password", "Id"})
 
 	for _, widget := range result {
 		if widget.ModifiedAt.IsZero() {
 			//tbl.AppendRow([]interface{}{widget.Label, widget.Account, color.YellowString(widget.Password), widget.Id, widget.CreatedAt.Format("2006-01-02 15:04:05"), "-"})
-			tbl.AppendRow([]interface{}{widget.Label, widget.Account, color.YellowString(widget.Password), widget.Id, "-"})
+			tbl.AppendRow([]interface{}{widget.Label, widget.Account, color.YellowString(widget.Password), widget.Id})
 		} else {
 			//tbl.AppendRow([]interface{}{widget.Label, widget.Account, color.YellowString(widget.Password), widget.Id, widget.CreatedAt.Format("2006-01-02 15:04:05"), widget.ModifiedAt.Format("2006-01-02 15:04:05")})
-			tbl.AppendRow([]interface{}{widget.Label, widget.Account, color.YellowString(widget.Password), widget.Id, widget.ModifiedAt.Format("2006-01-02 15:04:05")})
+			tbl.AppendRow([]interface{}{widget.Label, widget.Account, color.YellowString(widget.Password), widget.Id})
 
 		}
 		tbl.AppendSeparator()

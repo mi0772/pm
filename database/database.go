@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-const DB_NAME = "pm.db"
+const DB_NAME = ".pm.db"
 
 var userHomeDir string
 var MasterPassword string
